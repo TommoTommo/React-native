@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Text, View, TouchableOpacity, TextInput } from "react-native";
-import { auth } from "../src/firebase/config";
+import { auth } from "../../src/firebase/config";
 import firebase from 'firebase';
 
 class Login extends Component {
@@ -20,6 +20,7 @@ class Login extends Component {
         // Listen for changes in the user's authentication state
         firebase.auth().onAuthStateChanged(user => {
             this.setState({ user });
+            this.props.navigation.navigate("Menu");
         });
     }
 
@@ -31,6 +32,7 @@ class Login extends Component {
             console.log("passwordlogin");
             console.log(this.state.email);
             console.log("emaillogin");
+            this.props.navigation.navigate("Menu");
           })
           .catch(error => {
             console.log(error);
