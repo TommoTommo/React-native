@@ -6,9 +6,9 @@ import { NavigationContainer } from '@react-navigation/native';
 
 
 
-import Register from './screens/Register/Register';
-import Login from './screens/Login/Login';
-import Home from './screens/Home/Home';
+import Register from './src/screens/Register/Register';
+import Login from './src/screens//Login/Login';
+
 import Menu from './src/components/Menu';
 
 const Stack = createNativeStackNavigator();
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 
 export default function App() {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    
       
       <NavigationContainer style={styles.container}>
         <Stack.Navigator
@@ -39,7 +39,6 @@ export default function App() {
         >
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Register" component={Register} />
-          <Stack.Screen name='Home' component={Home} />
           <Stack.Screen name="Menu" component={Menu}/>
 
 
@@ -48,7 +47,7 @@ export default function App() {
 
         </Stack.Navigator>
       </NavigationContainer>
-    </View>
+   
   )
 
 

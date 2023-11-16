@@ -1,7 +1,11 @@
 import React, { Component } from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
-import { auth } from "../../src/firebase/config";
+import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
+import { auth } from "../../firebase/config";
 import firebase from 'firebase';
+
+
+
+console.log("holaaaa");
 
 class Home extends Component {
   constructor() {
@@ -26,12 +30,12 @@ class Home extends Component {
 
   render() {
     return (
-      <View >
+      < >
        
        
         
         
-        <Text >Hola Mundo</Text>
+        <Text style={styles.container}>Hola Mundo</Text>
 
         {this.state.registered ? (
           <Text >Welcome, {auth.currentUser.email}!</Text>
@@ -44,10 +48,18 @@ class Home extends Component {
           onPress={() => this.props.navigation.navigate('Login')}>
           <Text>Anda al Login</Text>
         </TouchableOpacity>
-      </View>
+      </>
     );
   }
 }
+const styles=StyleSheet.create( {container: {
+  color: "black"
+}})
+
 
 
 export default Home;
+
+
+
+

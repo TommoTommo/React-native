@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Text, View, TouchableOpacity, TextInput } from "react-native";
-import { auth } from "../../src/firebase/config";
+import { auth } from "../../firebase/config";
 import firebase from 'firebase';
 
 class Login extends Component {
@@ -19,10 +19,15 @@ class Login extends Component {
     componentDidMount() {
         // Listen for changes in the user's authentication state
         firebase.auth().onAuthStateChanged(user => {
-            this.setState({ user });
-            this.props.navigation.navigate("Menu");
+            if (user) {
+                this.setState({ user });
+                this.props.navigation.navigate("Menu");
+            } 
         });
     }
+    
+ 
+
 
     onSubmit(email, pass) {
         auth.signInWithEmailAndPassword(email, pass)
