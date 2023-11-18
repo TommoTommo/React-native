@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Camera } from "expo-camera"
 import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
-import { Storage } from "../firebase/config";
+import { storage } from "../firebase/config";
 
 class Camara extends Component{
     constructor (props) {
@@ -28,8 +28,8 @@ class Camara extends Component{
                 photo: photo.uri,
                 showCamera: false
             })
-        .catch(e => console.log(e))
         })
+        .catch(e => console.log(e))
     }
 
     rechazarFoto(){
@@ -42,7 +42,7 @@ class Camara extends Component{
         fetch(this.state.photo)
         .then(res => res.blob())
         .then(image => {
-            const ref= Storage.ref (`photo/${Date.now()}.jpg`)
+            const ref= storage.ref (`photo/${Date.now()}.jpg`);
             ref.put(image)
             .then(() => {
                 ref.getDownloadURL()
@@ -58,8 +58,8 @@ class Camara extends Component{
         console.log(this.state.photo)
         return(
             <>
-                {this.state.permisos ?
-                this.state.showCamera ?
+                {this.state.permisos === true ?
+                this.state.showCamera === false?
                 <View style= {StyleSheet.formContainer}>
                 <Camera style= {StyleSheet.camera} type= {Camera.constants.Type.front} ref= {metodosCamera => this.metodosCamera= metodosCamera}/>
                 <TouchableOpacity
