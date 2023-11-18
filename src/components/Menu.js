@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-// import Post from "../screens/Posts/Posts";
+import PostForm from "../screens/PostForm/PostForm";
 import User from "../screens/User/User";
 import Home from "../screens/Home/Home";
-import Prueba from "../screens/Prueba";
 
 const Tab = createBottomTabNavigator();
 
@@ -29,9 +28,8 @@ class Menu extends Component {
           },
         }}
       >
-        <Tab.Screen name="Prueba" component={Prueba} />
         <Tab.Screen name="Home" component={Home} />
-        {/* <Tab.Screen name="PostForm" component={Post} /> */}
+        <Tab.Screen name="PostForm" component={PostForm} /> 
         <Tab.Screen name="User" component={User} />
       </Tab.Navigator>
     );

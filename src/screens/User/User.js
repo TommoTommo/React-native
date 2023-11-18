@@ -18,7 +18,7 @@ class User extends Component {
     
     return (
       <View> 
-         <Text>    hola useeeeer</Text>
+         <Text>Hola user</Text>
  
       </View>
     );

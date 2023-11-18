@@ -3,7 +3,7 @@ import { Camera } from "expo-camera"
 import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
 import { Storage } from "../firebase/config";
 
-class MyCamara extends Component{
+class Camara extends Component{
     constructor (props) {
         super(props);
         this.state = {permisos: false, photo: "", showCamera: true}
@@ -12,7 +12,7 @@ class MyCamara extends Component{
     componentDidMount(){
         Camera.requestCameraPermissionsAsync()
         .then ( res => {
-                if (res,granted === true ){
+                if (res.granted === true ){
                     this.setState ({
                         permisos: true
                     })
@@ -25,14 +25,14 @@ class MyCamara extends Component{
         this.metodosCamera.takePicturesAsync()
         .then ( photo => {
             this.setState({
-                photo: photo.url,
+                photo: photo.uri,
                 showCamera: false
             })
         .catch(e => console.log(e))
         })
     }
 
-    aceptarFoto(){
+    rechazarFoto(){
         this.setState({
             showCamera: true,
         })
@@ -55,16 +55,13 @@ class MyCamara extends Component{
     }
 
     render(){
-
         console.log(this.state.photo)
         return(
             <>
                 {this.state.permisos ?
                 this.state.showCamera ?
                 <View style= {StyleSheet.formContainer}>
-                <Camera style= {StyleSheet.camera} type= {Camera.constants.
-                Type.front} ref= {metodosCamera => this.metodosCamera
-                = metodosCamera}/>
+                <Camera style= {StyleSheet.camera} type= {Camera.constants.Type.front} ref= {metodosCamera => this.metodosCamera= metodosCamera}/>
                 <TouchableOpacity
                     style= {StyleSheet.button}
                     onPress={() => this.sacarFoto()}
@@ -74,8 +71,7 @@ class MyCamara extends Component{
                 </View>
                 :
                 <View style= {StyleSheet.formContainer}>
-                    <Image style= {StyleSheet.camera} source= {{uri: this.state.
-                    photo}} />
+                    <Image style= {StyleSheet.camera} source= {{uri: this.state.photo}} />
                     <TouchableOpacity 
                         style= {StyleSheet.button}
                         onPress={() => this.aceptarFoto()}
@@ -99,8 +95,8 @@ class MyCamara extends Component{
 
 const styles = StyleSheet.create({
     formContainer: {
-        height: '60vh',
-        width: '100vw',
+        height: `60vh`,
+        width: `100vw`,
     },
     camera: {
         width: '100%',
@@ -131,4 +127,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default MyCamara
+export default Camara

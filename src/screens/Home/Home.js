@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
-import { auth } from "../../firebase/config";
+import { View, Text, Image, TouchableOpacity, StyleSheet, FlatList } from "react-native";
+import { db, auth } from "../../firebase/config";
 import firebase from 'firebase';
+import PostForm from "../PostForm/PostForm";
+import Post from "../../components/Post"
 
-
-
-console.log("holaaaa");
 
 class Home extends Component {
   constructor() {
@@ -14,6 +13,7 @@ class Home extends Component {
       email: '',
       password: '',
       registered: false,
+      posts:[]
     };
   }
 
@@ -26,16 +26,29 @@ class Home extends Component {
         this.setState({ registered: false });
       }
     });
+
+    db.collection('posts').onSnapshot(
+      listaPosts => {
+        let postsAMostrar = [];
+
+        listaPosts.forEach(unPost => {
+          postsAMostrar.push({
+            id: unPost.id,
+            datos: unPost.data()
+          })
+        })
+
+        this.setState({
+          posts: postsAMostrar
+        })
+
+      }
+    )
   }
 
   render() {
     return (
-      < >
-       
-       
-        
-        
-        <Text style={styles.container}>Hola Mundo</Text>
+      <View>
 
         {this.state.registered ? (
           <Text >Welcome, {auth.currentUser.email}!</Text>
@@ -43,15 +56,21 @@ class Home extends Component {
           <Text>Hello, Guest, you're not signed in!</Text>
         )}
 
-        <TouchableOpacity
-       
-          onPress={() => this.props.navigation.navigate('Login')}>
-          <Text>Anda al Login</Text>
-        </TouchableOpacity>
-      </>
+        <PostForm/>
+
+        <Text>Lista de publicaciones</Text>
+
+        <FlatList
+          data={this.state.posts}
+          keyExtractor={unPost => unPost.id}
+          renderItem={ ({item}) => <Post dataPost = {item} />}
+        />
+
+      </View>
     );
   }
 }
+
 const styles=StyleSheet.create( {container: {
   color: "black"
 }})
