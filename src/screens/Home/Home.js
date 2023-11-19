@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { View, Text, Image, TouchableOpacity, StyleSheet, FlatList } from "react-native";
+import { View, Text, Image, TouchableOpacity, StyleSheet, FlatList} from "react-native";
 import { db, auth } from "../../firebase/config";
 import firebase from 'firebase';
-import PostForm from "../PostForm/PostForm";
 import Post from "../../components/Post"
 
 
@@ -56,9 +55,7 @@ class Home extends Component {
           <Text>Hello, Guest, you're not signed in!</Text>
         )}
 
-        <PostForm/>
-
-        <Text>Lista de publicaciones</Text>
+        <Text>Lista de publicaciones:</Text>
 
         <FlatList
           data={this.state.posts}
@@ -71,14 +68,4 @@ class Home extends Component {
   }
 }
 
-const styles=StyleSheet.create( {container: {
-  color: "black"
-}})
-
-
-
 export default Home;
-
-
-
-

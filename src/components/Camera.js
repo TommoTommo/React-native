@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Camera } from "expo-camera"
-import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
+import { Text, StyleSheet, View, TouchableOpacity, Image } from "react-native";
 import { storage } from "../firebase/config";
 
 class Camara extends Component{
@@ -12,17 +12,17 @@ class Camara extends Component{
     componentDidMount(){
         Camera.requestCameraPermissionsAsync()
         .then ( res => {
-                if (res.granted === true ){
-                    this.setState ({
-                        permisos: true
-                    })
-                }
-            })
+            if (res.granted === true ){
+                this.setState ({
+                    permisos: true
+                })
+            }
+        })
         .catch(e => console.log(e))
     }
 
     sacarFoto(){
-        this.metodosCamera.takePicturesAsync()
+        this.metodosCamera.takePictureAsync()
         .then ( photo => {
             this.setState({
                 photo: photo.uri,
@@ -42,51 +42,52 @@ class Camara extends Component{
         fetch(this.state.photo)
         .then(res => res.blob())
         .then(image => {
-            const ref= storage.ref (`photo/${Date.now()}.jpg`);
-            ref.put(image)
-            .then(() => {
-                ref.getDownloadURL()
-                .then( url => {
-                    this.props.onImageUpload(url)
-                })
-            })
+           const ref = storage.ref(`photo/${Date.now()}.jpg`)
+           ref.put(image)
+           .then( () => {
+            ref.getDownloadURL()
+            .then( url => {
+                this.props.onImageUpload(url)
+            }
+            )
         })
-        .catch (e => console.log (e))
+        })
+        .catch(e => console.log(e))
     }
 
     render(){
         console.log(this.state.photo)
         return(
             <>
-                {this.state.permisos === true ?
-                this.state.showCamera === false?
-                <View style= {StyleSheet.formContainer}>
-                <Camera style= {StyleSheet.camera} type= {Camera.constants.Type.front} ref= {metodosCamera => this.metodosCamera= metodosCamera}/>
+                {this.state.permisos ?
+                this.state.showCamera ?
+                <View style= {styles.formContainer}>
+                <Camera style= {styles.camera} type= {Camera.Constants.Type.front} ref= {metodosCamera => this.metodosCamera= metodosCamera}/>
                 <TouchableOpacity
-                    style= {StyleSheet.button}
+                    style= {styles.button}
                     onPress={() => this.sacarFoto()}
                     >
-                    <Text style= {StyleSheet.textButton}> Sacar foto </Text>
+                    <Text style= {styles.textButton}> Sacar foto </Text>
                 </TouchableOpacity>
                 </View>
                 :
-                <View style= {StyleSheet.formContainer}>
-                    <Image style= {StyleSheet.camera} source= {{uri: this.state.photo}} />
+                <View style= {styles.formContainer}>
+                    <Image style= {styles.camera} source= {{uri: this.state.photo}} />
                     <TouchableOpacity 
-                        style= {StyleSheet.button}
+                        style= {styles.button}
                         onPress={() => this.aceptarFoto()}
                         >
-                        <Text style= {StyleSheet.textButton}> Aceptar </Text>
+                        <Text style= {styles.textButton}> Aceptar </Text>
                     </TouchableOpacity>
                     <TouchableOpacity 
-                        style= {StyleSheet.button}
+                        style= {styles.button}
                         onPress={() => this.rechazarFoto()}
                         >
-                        <Text style= {StyleSheet.textButton}> Rechazar </Text>
+                        <Text style= {styles.textButton}> Rechazar </Text>
                     </TouchableOpacity>
                 </View>
                 :
-                <Text> No me diste los permisos de la camara</Text> 
+                <Text>No me diste los permisos de la camara</Text> 
                 }    
             </>
         )
@@ -95,11 +96,11 @@ class Camara extends Component{
 
 const styles = StyleSheet.create({
     formContainer: {
-        height: `60vh`,
-        width: `100vw`,
+        height: `50vh`,
+        width: `40vw`,
     },
     camera: {
-        width: '100%',
+        widht: '100%',
         height: '100%',
     },
     input:{
