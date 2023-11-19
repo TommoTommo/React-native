@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { View, Text, TextInput, TouchableOpacity, Image, Button } from "react-native";
-import { auth, db } from "../../firebase/config";
+import { auth, db, storage } from "../../firebase/config"; // Assuming 'storage' is imported from the Firebase config
 import * as ImagePicker from 'expo-image-picker';
+import Camera from '../../components/Camera';
 
 class Register extends Component {
   constructor() {
@@ -13,8 +14,17 @@ class Register extends Component {
       error: "",
       Bio: "",
       image: null,
+      showCamera: false,
+      
     };
   }
+
+  takeImage = () => {
+    this.setState({ showCamera: true });
+  }
+  onImageUpload(url){
+    this.setState({image:url, showCamera: false});
+}
 
   pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -24,10 +34,27 @@ class Register extends Component {
       quality: 1,
     });
 
-    console.log(result);
-
     if (!result.cancelled) {
-      this.setState({ image: result.assets[0].uri });
+      const imageUri = result.uri;
+      
+      fetch(imageUri)
+        .then(res => res.blob())
+        .then(image => {
+          const ref = storage.ref(`photo/${Date.now()}.jpg`);
+
+          ref.put(image)
+            .then(() => {
+              ref.getDownloadURL()
+                .then(url => {
+                  console.log("Download URL:", url);
+           
+                  this.setState({ image: url }); // Update the state with the downloaded image URL
+                })
+                .catch(error => console.error("Error getting download URL:", error));
+            })
+            .catch(error => console.error("Error uploading image:", error));
+        })
+        .catch(error => console.error("Error fetching image:", error));
     }
   };
 
@@ -45,19 +72,19 @@ class Register extends Component {
           image: this.state.image, // Save the picked image URI to Firestore
         })
         .then()
-        .catch(e => console.log(e));
+        .catch(e => console.error("Error adding user to collection:", e));
       })
       .catch(error => {
         console.log(error);
         if (email === "" || pass === "") {
-          this.setState({ error: "Porfavor complete campos obligatorios" });
-        } else if (error.code === "auth/invalid-email") {
-          this.setState({ error: error.message + " Mail or contraseña invaldias" });
+          this.setState({ error: "Porfavor complete campos obligatorios (con *)" });
+        } else if (error.code === 'auth/weak-password') {
+          this.setState({ error: error.message + " Contraseña invaldias" });
         } else {
-          this.setState({ error: error.message + " Mail o Contraseña equivocadas" });
+          this.setState({ error: error.message + " Mail invalida" });
         }
       });
-  }
+  };
 
   render() {
     return (
@@ -88,19 +115,22 @@ class Register extends Component {
           onChangeText={(text) => this.setState({ Bio: text })}
           value={this.state.Bio}
         />
-              <Text>Foto:</Text>
-<Button title="ELEGIR FOTO" onPress={this.pickImage} />
-        {this.state.image && <Image source={{ uri: this.state.image }} style={{ width: 200, height: 200 }} />}
-
+        <Text>Foto:</Text>
+        <Button title="ELEGIR FOTO" onPress={this.pickImage} />
+        <p></p>
+        <Button title="Sacar FOTO" onPress={this.takeImage} />
+        {this.state.showCamera ? <Camera onImageUpload={(url) => this.onImageUpload(url)} /> : null}
+        
+        {this.state.image && <Image source={{ uri: this.state.image }} style={{ width: 300, height: 300 }} />}
         <TouchableOpacity style={styles.loginButton} onPress={() => this.onSubmit(this.state.email, this.state.password)}>
           <Text style={styles.loginText}>Register</Text>
         </TouchableOpacity>
-        
+        {this.state.registered ? <Text style={styles.registeredText}>Registered successfully!</Text> : <Text style={styles.errorText}>{this.state.error}</Text>}
         <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')}>
           <Text style={styles.loginLinkText}>Already have an account? Login</Text>
         </TouchableOpacity>
-
-     
+        
+        
       </View>
     );
   }
@@ -152,3 +182,4 @@ const styles = {
 };
 
 export default Register;
+
