@@ -41,10 +41,12 @@ class Login extends Component {
           })
           .catch(error => {
             console.log(error);
-            if (error.message != "The email address is badly formatted.") {
-              this.setState({ error: "Wrong Mail or Password" });
+            if ( email === "" || pass === ""   ) {
+              this.setState({ error: "Porfavor complete los campos " });
+            } else if (error.code == "auth/invalid-email") {
+              this.setState({ error: error.message + " Mail or contraseña invaldias" });
             } else {
-              this.setState({ error: error.message });
+              this.setState({ error: " Mail o Contraseña equivocadas" });
             }
           });
       }
@@ -79,9 +81,7 @@ class Login extends Component {
                 <TouchableOpacity style={styles.logoutButton} onPress={() => this.signOut()}>
                     <Text style={styles.logoutText}>END SESSION</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.Remember()}>
-                    <Text style={styles.rememberText}>Remember Me</Text>
-                </TouchableOpacity>
+        
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('Register')}>
                     <Text style={styles.registerText}>No tenes cuenta? Registrate</Text>
                 </TouchableOpacity>
