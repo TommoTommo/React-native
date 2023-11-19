@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, TextInput, TouchableOpacity, Image, Button } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Image,  } from "react-native";
 import { auth, db, storage } from "../../firebase/config"; // Assuming 'storage' is imported from the Firebase config
 import * as ImagePicker from 'expo-image-picker';
 import Camera from '../../components/Camera';
@@ -15,6 +15,7 @@ class Register extends Component {
       Bio: "",
       image: null,
       showCamera: false,
+      Username:""
       
     };
   }
@@ -70,6 +71,7 @@ class Register extends Component {
           description: this.state.Bio,
           createdAt: Date.now(),
           image: this.state.image, // Save the picked image URI to Firestore
+          Username: this.state.Username
         })
         .then()
         .catch(e => console.error("Error adding user to collection:", e));
@@ -109,6 +111,14 @@ class Register extends Component {
           onChangeText={(text) => this.setState({ password: text })}
           value={this.state.password}
         />
+             <Text>Username:</Text>
+        <TextInput
+          style={styles.input}
+          keyboardType="default"
+          placeholder="Username"
+          onChangeText={(text) => this.setState({ Username: text })}
+          value={this.state.Username}
+        />
         <Text>Bio:</Text>
         <TextInput
           style={styles.input}
@@ -117,11 +127,20 @@ class Register extends Component {
           onChangeText={(text) => this.setState({ Bio: text })}
           value={this.state.Bio}
         />
+
+
         <Text>Foto:</Text>
-        <Button title="ELEGIR FOTO" onPress={this.pickImage} />
+
+        <TouchableOpacity style={styles.loginButton} onPress={this.pickImage}>
+          <Text style={styles.loginText}>Elegir Photo</Text>
+        </TouchableOpacity>
         <p></p>
-        <Button title="Sacar FOTO" onPress={this.takeImage} />
+        
         {this.state.showCamera ? <Camera onImageUpload={(url) => this.onImageUpload(url)} /> : null}
+        <TouchableOpacity style={styles.loginButton} onPress={this.takeImage}>
+          <Text style={styles.loginText}>Sacar Photo</Text>
+        </TouchableOpacity>
+
         
         {this.state.image && <Image source={{ uri: this.state.image }} style={{ width: 300, height: 300 }} />}
         <TouchableOpacity style={styles.loginButton} onPress={() => this.onSubmit(this.state.email, this.state.password)}>
