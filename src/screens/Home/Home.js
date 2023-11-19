@@ -57,11 +57,11 @@ class Home extends Component {
 
         <Text>Lista de publicaciones:</Text>
 
-        <FlatList
+        { <FlatList
           data={this.state.posts}
           keyExtractor={unPost => unPost.id}
           renderItem={ ({item}) => <Post dataPost = {item} />}
-        />
+        /> }
 
       </View>
     );

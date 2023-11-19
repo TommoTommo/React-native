@@ -73,6 +73,8 @@ class Register extends Component {
         })
         .then()
         .catch(e => console.error("Error adding user to collection:", e));
+
+        this.props.navigation.navigate('Login')
       })
       .catch(error => {
         console.log(error);

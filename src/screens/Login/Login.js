@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, View, TouchableOpacity, TextInput } from "react-native";
+import { Text, View, TouchableOpacity, TextInput, ActivityIndicator  } from "react-native";
 import { auth } from "../../firebase/config";
 import firebase from 'firebase';
 
@@ -11,25 +11,32 @@ class Login extends Component {
             password: '',
             loggedIn: false,
             error: "",
-            user: null,
+            user: false,
             rememberMe: false,
+            cargando:true
         }
     }
 
     componentDidMount() {
         // Listen for changes in the user's authentication state
         firebase.auth().onAuthStateChanged(user => {
-            if (user) {
-                this.setState({ user });
-                this.props.navigation.navigate("Menu");
-            } 
+          if (user===null) {
+            this.setState({  cargando: false });
+            
+          }
+            else if (user){
+                this.setState({ user })
+                this.setState({  cargando: false });
+                this.props.navigation.navigate('Menu');}
+           
+          
         });
-    }
+      }
     
  
 
 
-    onSubmit(email, pass) {
+      onSubmit(email, pass) {
         auth.signInWithEmailAndPassword(email, pass)
           .then(response => {
             this.setState({ loggedIn: true });
@@ -41,15 +48,24 @@ class Login extends Component {
           })
           .catch(error => {
             console.log(error);
-            if ( email === "" || pass === ""   ) {
-              this.setState({ error: "Porfavor complete los campos " });
-            } else if (error.code == "auth/invalid-email") {
-              this.setState({ error: error.message + " Mail or contraseña invaldias" });
+            if (email === "" || pass === "") {
+              this.setState({ error: error.message + "Por favor complete los campos" });
+            } else if (error.code === "auth/invalid-email" ) {
+              this.setState({ error: error.message + " Mail invalida" });
             } else {
-              this.setState({ error: " Mail o Contraseña equivocadas" });
+                const errorMessageObject = JSON.parse(error.message);
+                const invalidCredentialsMessage = errorMessageObject.error.message;
+ 
+              this.setState({ error: invalidCredentialsMessage + "  Mail o Contraseña equivocadas" });
             }
           });
       }
+      
+    //   {"error":{"code":400,"message":"INVALID_LOGIN_CREDENTIALS","errors":[{"message":"INVALID_LOGIN_CREDENTIALS","domain":"global","reason":"invalid"}]}};
+
+
+
+
 
     signOut() {
         auth.signOut()
@@ -58,6 +74,12 @@ class Login extends Component {
     render() {
         return (
             <View style={styles.container}>
+                
+
+            {this.state.cargando ? (
+                <ActivityIndicator size="large" color="#0000ff" />
+            ) : (
+                <>
                 <Text style={styles.header}>Login</Text>
                 <TextInput
                     style={styles.input}
@@ -85,6 +107,20 @@ class Login extends Component {
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('Register')}>
                     <Text style={styles.registerText}>No tenes cuenta? Registrate</Text>
                 </TouchableOpacity>
+                </>
+            )}
+
+
+
+
+
+
+
+
+
+
+
+              
 
             </View>
         );
