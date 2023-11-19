@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Image, TouchableOpacity, StyleSheet, FlatList} from "react-native";
+import { View, Text, Image, TouchableOpacity, StyleSheet, FlatList, ScrollView} from "react-native";
 import { db, auth } from "../../firebase/config";
 import firebase from 'firebase';
 import Post from "../../components/Post"
@@ -47,7 +47,7 @@ class Home extends Component {
 
   render() {
     return (
-      <View>
+      <ScrollView>
 
         {this.state.registered ? (
           <Text >Welcome, {auth.currentUser.email}!</Text>
@@ -63,7 +63,7 @@ class Home extends Component {
           renderItem={ ({item}) => <Post dataPost = {item} />}
         /> }
 
-      </View>
+      </ScrollView>
     );
   }
 }
