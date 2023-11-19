@@ -1,7 +1,7 @@
 import react, { Component } from "react";
 import {db, auth } from '../../firebase/config';
 import {TextInput, TouchableOpacity, View, Text, StyleSheet, FlatList, ScrollView, Image} from 'react-native';
-import {updatePassword} from 'firebase/auth'
+import Post from "../../components/Post"
 
 class MyProfile extends Component{
   constructor(props){
@@ -53,9 +53,22 @@ class MyProfile extends Component{
     console.log('perfil')
       return (
         <View>
-        <Text>Bienvenido {this.state.dataUsuario.owner}</Text>
+        <Text>Bienvenido {this.state.dataUsuario.Username}</Text>
         <Text>Biografia: {this.state.dataUsuario.description}</Text>
         <Text>Mail: {auth.currentUser.email}</Text>
+<br></br>
+<br></br>
+<Text> Mis posteos:</Text>
+                <FlatList
+                    data={this.state.posteos}
+                    keyExtractor={unPost => unPost.id.toString()}
+                    renderItem={({ item }) => <Post dataPost={item} />}
+                />
+  <br></br>
+<br></br>
+        <TouchableOpacity onPress={()=> this.logout()}>
+        <text> Cerrar Sesion</text>
+        </TouchableOpacity>
     </View>
       )
     
