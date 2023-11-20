@@ -33,7 +33,7 @@ class PostForm extends Component {
   render() {
     return (
       <View style={styles.formContainer}>
-        <Text style={styles.title}>Crear publicación</Text>
+        <Text style={styles.titulo}>Crear publicación</Text>
 
         {this.state.showCamera ? (
           <Camera onImageUpload={(url) => this.onImageUpload(url)} />
@@ -64,8 +64,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginTop: 20,
   },
-  title: {
-    fontSize: 18,
+  titulo: {
+    fontSize: 25,
     fontWeight: 'bold',
     marginBottom: 10,
   },

@@ -55,7 +55,7 @@ class Home extends Component {
           <Text>Hello, Guest, you're not signed in!</Text>
         )}
 
-        <Text>Lista de publicaciones:</Text>
+        <Text style={styles.titulo}>Lista de publicaciones:</Text>
 
         { <FlatList
           data={this.state.posts}
@@ -67,5 +67,14 @@ class Home extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+
+  titulo: {
+      fontSize: 25,
+      fontWeight: 'bold',
+      marginBottom: 10,
+    },
+})
 
 export default Home;

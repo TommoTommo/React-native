@@ -58,7 +58,7 @@ class MyProfile extends Component{
         <Text>Mail: {auth.currentUser.email}</Text>
 <br></br>
 <br></br>
-<Text style={styles.title}> Mis posteos:</Text>
+<Text style={styles.titulo}> Mis posteos:</Text>
                 <FlatList
                     data={this.state.posteos}
                     keyExtractor={unPost => unPost.id.toString()}
@@ -78,10 +78,10 @@ class MyProfile extends Component{
 
   const styles = StyleSheet.create({
 
-  title: {
-      fontSize: 18,
-      fontWeight: 'bold',
-      marginBottom: 10,
+titulo: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    marginBottom: 10,
     },
 })
 
