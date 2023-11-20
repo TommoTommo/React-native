@@ -37,7 +37,7 @@ export default function App() {
         >
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Register" component={Register} />
-          <Stack.Screen name="Menu" component={Menu} />
+          <Stack.Screen name="Menu" component={Menu} options={{headerShown:false}} />
           <Stack.Screen name="Friend" component={Friend} />
           
 
