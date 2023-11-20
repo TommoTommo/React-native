@@ -52,13 +52,13 @@ class MyProfile extends Component{
   render() {
     console.log('perfil')
       return (
-        <View>
+        <ScrollView>
         <Text>Bienvenido {this.state.dataUsuario.Username}</Text>
-        <Text>Biografia: {this.state.dataUsuario.description}</Text>
+        <Text style={styles.title}>Biografia: {this.state.dataUsuario.description}</Text>
         <Text>Mail: {auth.currentUser.email}</Text>
 <br></br>
 <br></br>
-<Text> Mis posteos:</Text>
+<Text style={styles.titulo}> Mis posteos:</Text>
                 <FlatList
                     data={this.state.posteos}
                     keyExtractor={unPost => unPost.id.toString()}
@@ -66,13 +66,35 @@ class MyProfile extends Component{
                 />
   <br></br>
 <br></br>
-        <TouchableOpacity onPress={()=> this.logout()}>
-        <text> Cerrar Sesion</text>
+        <TouchableOpacity style={styles.logoutButton} onPress={()=> this.logout()}>
+        <Text style= { styles.logoutButtonText}> Cerrar Sesion</Text>
         </TouchableOpacity>
-    </View>
+    </ScrollView>
       )
     
     }
   }
+
+
+const styles = StyleSheet.create({
+
+titulo: {
+  fontSize: 25,
+  fontWeight: 'bold',
+  marginBottom: 10,
+  },
+logoutButton: {
+  backgroundColor: '#2196F3',
+  paddingVertical: 10,
+  paddingHorizontal: 20,
+  borderRadius: 5,
+  marginTop: 20,
+  },
+logoutButtonText: {
+  color: 'white',
+  textAlign: 'center',
+  fontWeight: 'bold',
+  } 
+})
 
 export default MyProfile;

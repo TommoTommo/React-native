@@ -114,17 +114,20 @@ const styles = StyleSheet.create({
         marginVertical: 10,
     },
     button: {
-        backgroundColor: 'blue',
+        backgroundColor: "#2196F3",
         paddingHorizontal: 10,
         paddingVertical: 6,
         textAlign: 'center',
         borderRadius: 4,
         borderWidth: 1,
         borderStyle: 'solid',
-        borderColor: '#28a745',
+        borderColor: '#2196F3',
+        margin:0.5
     },
     textButton: {
-        color: '#aff',
+        color: 'white',
+        textAlign: 'center',
+        fontWeight: 'bold',
     },
 });
 
