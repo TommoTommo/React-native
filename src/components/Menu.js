@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import PostForm from "../screens/PostForm/PostForm";
 import User from "../screens/User/User";
 import Home from "../screens/Home/Home";
+import Buscador from "../screens/Buscador/Buscador";
 
 const Tab = createBottomTabNavigator();
 
@@ -31,6 +32,7 @@ class Menu extends Component {
         <Tab.Screen name="Home" component={Home} />
         <Tab.Screen name="PostForm" component={PostForm} /> 
         <Tab.Screen name="User" component={User} />
+        <Tab.Screen name="Buscador" component={Buscador} />
       </Tab.Navigator>
     );
   }

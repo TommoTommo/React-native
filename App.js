@@ -7,6 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import Register from './src/screens/Register/Register';
 import Login from './src/screens//Login/Login';
 import Menu from './src/components/Menu';
+import Friend from './src/screens/Firends/Friend';
 
 const Stack = createNativeStackNavigator();
 
@@ -37,6 +38,8 @@ export default function App() {
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Register" component={Register} />
           <Stack.Screen name="Menu" component={Menu} />
+          <Stack.Screen name="Friend" component={Friend} />
+          
 
         </Stack.Navigator>
       </NavigationContainer>

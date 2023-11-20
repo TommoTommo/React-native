@@ -47,6 +47,8 @@ class Home extends Component {
 
   render() {
     return (
+      <View>
+  
       <ScrollView>
 
         {this.state.registered ? (
@@ -64,6 +66,7 @@ class Home extends Component {
         /> }
 
       </ScrollView>
+      </View>
     );
   }
 }
