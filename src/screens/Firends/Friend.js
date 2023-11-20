@@ -113,7 +113,8 @@ class Friend extends Component {
         marginBottom: 20,
       },
       postContainer: {
-        flex: 1,
+        height: 450,
+        alignItems: 'center'
       },
     });
   
