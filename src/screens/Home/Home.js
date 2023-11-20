@@ -47,7 +47,7 @@ class Home extends Component {
 
   render() {
     return (
-      <View>
+      
   
       <ScrollView>
 
@@ -66,7 +66,7 @@ class Home extends Component {
         /> }
 
       </ScrollView>
-      </View>
+      
     );
   }
 }
