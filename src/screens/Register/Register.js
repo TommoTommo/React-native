@@ -80,7 +80,7 @@ class Register extends Component {
       })
       .catch(error => {
         console.log(error);
-        if (email === "" || pass === "") {
+        if (email === "" || pass === ""||this.state.Username==="") {
           this.setState({ error: "Porfavor complete campos obligatorios (con *)" });
         } else if (error.code === 'auth/weak-password') {
           this.setState({ error: error.message + " Contraseña invaldias" });
@@ -111,7 +111,7 @@ class Register extends Component {
           onChangeText={(text) => this.setState({ password: text })}
           value={this.state.password}
         />
-             <Text>Username:</Text>
+             <Text>Username*:</Text>
         <TextInput
           style={styles.input}
           keyboardType="default"

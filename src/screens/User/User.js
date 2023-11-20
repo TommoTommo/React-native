@@ -56,6 +56,7 @@ class MyProfile extends Component{
         <Text>Bienvenido {this.state.dataUsuario.Username}</Text>
         <Text style={styles.title}>Biografia: {this.state.dataUsuario.description}</Text>
         <Text>Mail: {auth.currentUser.email}</Text>
+        <Image style={styles.profileImage} source={{ uri: this.state.dataUsuario.image }} />
 <br></br>
 <br></br>
 <Text style={styles.titulo}> Mis posteos:</Text>
@@ -89,6 +90,12 @@ logoutButton: {
   paddingHorizontal: 20,
   borderRadius: 5,
   marginTop: 20,
+  },profileImage: {
+    width: 150,
+    height: 150,
+    borderRadius: 75,
+    alignSelf: 'center',
+    marginBottom: 20,
   },
 logoutButtonText: {
   color: 'white',
