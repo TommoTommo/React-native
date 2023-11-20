@@ -122,9 +122,12 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderStyle: 'solid',
         borderColor: '#2196F3',
+        margin:0.5
     },
     textButton: {
-        color: '#aff',
+        color: 'white',
+        textAlign: 'center',
+        fontWeight: 'bold',
     },
 });
 
