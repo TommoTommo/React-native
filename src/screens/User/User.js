@@ -54,11 +54,11 @@ class MyProfile extends Component{
       return (
         <View>
         <Text>Bienvenido {this.state.dataUsuario.Username}</Text>
-        <Text>Biografia: {this.state.dataUsuario.description}</Text>
+        <Text style={styles.title}>Biografia: {this.state.dataUsuario.description}</Text>
         <Text>Mail: {auth.currentUser.email}</Text>
 <br></br>
 <br></br>
-<Text> Mis posteos:</Text>
+<Text style={styles.title}> Mis posteos:</Text>
                 <FlatList
                     data={this.state.posteos}
                     keyExtractor={unPost => unPost.id.toString()}
@@ -74,5 +74,15 @@ class MyProfile extends Component{
     
     }
   }
+
+
+  const styles = StyleSheet.create({
+
+  title: {
+      fontSize: 18,
+      fontWeight: 'bold',
+      marginBottom: 10,
+    },
+})
 
 export default MyProfile;
